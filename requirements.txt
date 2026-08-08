@@ -1,5 +1,7 @@
 streamlit
 pandas
+plotly
+fpdf
 python-dotenv
 faiss-cpu
 pymupdf
