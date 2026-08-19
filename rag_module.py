@@ -12,7 +12,6 @@ from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 load_dotenv()
 
@@ -46,24 +45,19 @@ def rewrite_query_with_glossary(query: str) -> str:
     return expanded_query
 
 def route_question(query: str) -> str:
-    """질문을 공정 카테고리(photo/etch/deposition)로 분류. 애매하면 all 반환."""
     q = query.lower()
-
     for category, words in KOREAN_KEYWORDS.items():
         if any(w in query for w in words):
             return category
-
     for category, words in ENGLISH_KEYWORDS.items():
         for w in words:
             if re.search(rf"\b{re.escape(w)}\b", q):
                 return category
-
     return "all"
 
 def format_docs(docs):
     if not docs:
         return "검색된 관련 매뉴얼 내용이 없습니다."
-
     formatted = []
     for doc in docs:
         source_file = os.path.basename(doc.metadata.get("source", "Unknown Manual"))
@@ -150,11 +144,9 @@ def create_multi_pdf_rag_chain(manual_dir="manuals", force_rebuild=False):
 
     categories = ["photo", "etch", "deposition"]
     bm25_by_category = {}
-    docs_by_category = {}
     for category in categories:
         target_docs = [d for d in child_docs if d.metadata.get("category") == category]
         if target_docs:
-            docs_by_category[category] = target_docs
             bm25 = BM25Retriever.from_documents(target_docs)
             bm25.k = 3
             bm25_by_category[category] = bm25
@@ -188,12 +180,8 @@ Answer in Korean:"""
 
     llm = ChatOpenAI(model_name="gpt-4o", temperature=0, streaming=True)
 
-    def get_relevant_context(input_data):
-        if isinstance(input_data, dict):
-            raw_query = input_data.get("question", "")
-        else:
-            raw_query = str(input_data)
-
+    def get_context(dict_input):
+        raw_query = dict_input["question"]
         category = route_question(raw_query)
         expanded_query = rewrite_query_with_glossary(raw_query)
 
@@ -218,7 +206,7 @@ Answer in Korean:"""
 
     rag_chain = (
         {
-            "context": RunnableLambda(get_relevant_context),
+            "context": get_context,
             "question": lambda x: x["question"],
             "chat_history": lambda x: x["chat_history"],
         }
