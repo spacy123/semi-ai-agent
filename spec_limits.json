@@ -1,14 +1,38 @@
 {
-  "Etch_Depth": {"Target": 150.0, "LSL": 148.0, "USL": 152.0, "Unit": "nm"},
-  "Etch_Depth_nm": {"Target": 150.0, "LSL": 145.0, "USL": 155.0, "Unit": "nm"},
-  "CD_Size": {"Target": 30.0, "LSL": 29.0, "USL": 31.0, "Unit": "nm"},
-  "CD_Size_nm": {"Target": 30.0, "LSL": 28.0, "USL": 32.0, "Unit": "nm"},
-  "cd": {"Target": 0.0, "LSL": -0.05, "USL": 0.05, "Unit": "mm"},
-  "thickness": {"Target": 0.3, "LSL": 0.2, "USL": 0.4, "Unit": "um"},
-  "Oxide_Thick": {"Target": 200.0, "LSL": 195.0, "USL": 205.0, "Unit": "A"},
-  "Oxide_Thickness_nm": {"Target": 100.0, "LSL": 95.0, "USL": 105.0, "Unit": "nm"},
-  "RF_Power": {"Target": 750.0, "LSL": 730.0, "USL": 780.0, "Unit": "W"},
-  "0": {"Target": 3000.0, "LSL": 2970.0, "USL": 3030.0, "Unit": "mTorr"},
-  "1": {"Target": 2500.0, "LSL": 2400.0, "USL": 2600.0, "Unit": "W"},
-  "2": {"Target": 2200.0, "LSL": 2100.0, "USL": 2300.0, "Unit": "sccm"}
+  "Etch_Depth": {
+    "Target": 150,
+    "LSL": 148,
+    "USL": 152,
+    "Unit": "nm"
+  },
+  "CD_Size": {
+    "Target": 30,
+    "LSL": 29,
+    "USL": 31,
+    "Unit": "nm"
+  },
+  "Oxide_Thick": {
+    "Target": 100,
+    "LSL": 95,
+    "USL": 105,
+    "Unit": "nm"
+  },
+  "RF_Power": {
+    "Target": 750,
+    "LSL": 730,
+    "USL": 780,
+    "Unit": "W"
+  },
+  "Chamber_Pressure": {
+    "Target": 3000,
+    "LSL": 2970,
+    "USL": 3030,
+    "Unit": "mTorr"
+  },
+  "Gas_Flow": {
+    "Target": 2200,
+    "LSL": 2100,
+    "USL": 2300,
+    "Unit": "sccm"
+  }
 }
